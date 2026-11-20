@@ -23,7 +23,7 @@ export const AppColors = {
     overlay: 'rgba(0,0,0,0.45)',
   },
   dark: {
-    background: '#0050fc',
+    background: '#111827',
     surface: '#172235',
     card: '#1B2636',
     input: '#253247',
