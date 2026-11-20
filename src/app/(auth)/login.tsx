@@ -12,15 +12,15 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  useColorScheme,
   View,
-  type ScrollViewInstance,
+  type ScrollViewInstance
 } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
+import { useAppTheme } from '@/contexts/AppThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 
 const colores = {
@@ -64,8 +64,12 @@ type CampoLogin = 'email' | 'password';
 export default function LoginScreen() {
   const { login } = useAuth();
 
-  const colorScheme = useColorScheme();
-  const theme = colores[colorScheme === 'dark' ? 'dark' : 'light'];
+
+  // para tomar el tema del telefono cambiaremos por el personalizado de la app
+  // const colorScheme = useColorScheme();
+  // const theme = colores[colorScheme === 'dark' ? 'dark' : 'light'];
+  const { resolvedTheme } = useAppTheme();
+  const theme = colores[resolvedTheme];
 
   const [mostrarPassword, setMostrarPassword] = useState(false);
   const [tecladoVisible, setTecladoVisible] = useState(false);
@@ -197,8 +201,8 @@ export default function LoginScreen() {
         >
           <Formik
             initialValues={{
-              email: '',
-              password: '',
+              email: 'carlosbueso1999@gmail.com',
+              password: 'Cabo2026.',
             }}
             validationSchema={loginSchema}
             validateOnBlur
@@ -396,7 +400,7 @@ export default function LoginScreen() {
                       styles.errorContainer,
                       {
                         backgroundColor:
-                          colorScheme === 'dark'
+                          resolvedTheme  === 'dark'
                             ? 'rgba(248,113,113,0.12)'
                             : '#FEF2F2',
                       },

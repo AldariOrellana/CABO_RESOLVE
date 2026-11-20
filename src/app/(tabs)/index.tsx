@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  useColorScheme,
   View,
 } from 'react-native';
 
@@ -17,38 +16,38 @@ import Svg, { Path } from 'react-native-svg';
 
 import { BottomTabInset, Spacing } from '@/constants/theme';
 import { useAuth } from '@/contexts/AuthContext';
-
-const colores = {
-  light: {
-    background: '#FFFFFF',
-    header: '#3761B6',
-    title: '#202E43',
-    text: '#687891',
-  },
-  dark: {
-    background: '#111827',
-    header: '#3761B6',
-    title: '#F1F5F9',
-    text: '#A8B8D0',
-  },
-};
+import { useAppTheme } from '@/hooks/useAppTheme';
 
 export default function HomeScreen() {
   const { usuario, logout } = useAuth();
+  const { colors, resolvedTheme } = useAppTheme();
   const insets = useSafeAreaInsets();
-
-  const colorScheme = useColorScheme();
-  const theme = colores[colorScheme === 'dark' ? 'dark' : 'light'];
 
   const nombreUsuario = usuario?.nombre || 'Usuario';
 
-  // CONFIRMACIÓN DE CIERRE DE SESIÓN
+  const cerrarSesion = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      const mensaje =
+        error instanceof Error
+          ? error.message
+          : 'No fue posible cerrar sesión.';
+
+      if (Platform.OS === 'web') {
+        window.alert(mensaje);
+      } else {
+        Alert.alert('Error al cerrar sesión', mensaje);
+      }
+    }
+  };
+
   const confirmarCerrarSesion = () => {
     const mensaje = '¿Estás seguro de que deseas cerrar sesión?';
 
     if (Platform.OS === 'web') {
       if (window.confirm(mensaje)) {
-        logout();
+        void cerrarSesion();
       }
       return;
     }
@@ -64,7 +63,9 @@ export default function HomeScreen() {
         {
           text: 'Cerrar sesión',
           style: 'destructive',
-          onPress: logout,
+          onPress: () => {
+            void cerrarSesion();
+          },
         },
       ],
       { cancelable: true }
@@ -75,10 +76,17 @@ export default function HomeScreen() {
     <View
       style={[
         styles.container,
-        { backgroundColor: theme.background },
+        { backgroundColor: colors.background },
       ]}
     >
-      <StatusBar barStyle="light-content" />
+      <StatusBar
+        barStyle={
+          resolvedTheme === 'dark'
+            ? 'light-content'
+            : 'dark-content'
+        }
+      
+      />
 
       <ScrollView
         style={styles.scroll}
@@ -89,18 +97,16 @@ export default function HomeScreen() {
         }}
         showsVerticalScrollIndicator={false}
       >
-        {/* ENCABEZADO */}
         <View
           style={[
             styles.header,
             {
-              backgroundColor: theme.header,
+              backgroundColor: colors.primary,
               paddingTop: insets.top + 20,
             },
           ]}
         >
           <View style={styles.headerContent}>
-
             <View style={styles.userRow}>
               <View style={styles.userInfo}>
                 <Text style={styles.brand}>
@@ -119,7 +125,6 @@ export default function HomeScreen() {
                 </Text>
               </View>
 
-              {/* AVATAR */}
               <View style={styles.avatar}>
                 <Ionicons
                   name="person-outline"
@@ -129,7 +134,6 @@ export default function HomeScreen() {
               </View>
             </View>
 
-            {/* CERRAR SESIÓN */}
             <TouchableOpacity
               style={styles.logoutButton}
               onPress={confirmarCerrarSesion}
@@ -147,10 +151,8 @@ export default function HomeScreen() {
                 Cerrar sesión
               </Text>
             </TouchableOpacity>
-
           </View>
 
-          {/* CURVA INFERIOR */}
           <Svg
             width="100%"
             height={55}
@@ -167,22 +169,21 @@ export default function HomeScreen() {
                 L0 55
                 Z
               "
-              fill={theme.background}
+              fill={colors.background}
             />
           </Svg>
         </View>
 
-        {/* CONTENIDO PRINCIPAL */}
         <View
           style={[
             styles.content,
-            { backgroundColor: theme.background },
+            { backgroundColor: colors.background },
           ]}
         >
           <Text
             style={[
               styles.sectionTitle,
-              { color: theme.title },
+              { color: colors.text },
             ]}
           >
             Panel principal
@@ -191,7 +192,7 @@ export default function HomeScreen() {
           <Text
             style={[
               styles.description,
-              { color: theme.text },
+              { color: colors.textSecondary },
             ]}
           >
             Bienvenido a CABO Resolve.
@@ -199,7 +200,6 @@ export default function HomeScreen() {
             y gestionar tus operaciones.
           </Text>
         </View>
-
       </ScrollView>
     </View>
   );
