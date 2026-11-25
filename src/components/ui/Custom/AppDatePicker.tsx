@@ -1,13 +1,6 @@
-
 import { useMemo, useState } from 'react';
 
-import {
-    Modal,
-    Pressable,
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
+import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { Ionicons } from '@expo/vector-icons';
@@ -25,9 +18,18 @@ interface AppDatePickerProps {
 }
 
 const MONTHS = [
-  'Enero', 'Febrero', 'Marzo', 'Abril',
-  'Mayo', 'Junio', 'Julio', 'Agosto',
-  'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre',
 ];
 
 const WEEKDAYS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
@@ -102,9 +104,10 @@ export function AppDatePicker({
   const dateLabel = value
     ? (() => {
         const date = parseDate(value);
-        return `${String(date.getDate()).padStart(2, '0')}/${
-          String(date.getMonth() + 1).padStart(2, '0')
-        }/${date.getFullYear()}`;
+        return `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(
+          2,
+          '0',
+        )}/${date.getFullYear()}`;
       })()
     : placeholder;
 
@@ -113,9 +116,7 @@ export function AppDatePicker({
       {label && (
         <Text style={[styles.label, { color: colors.text }]}>
           {label}
-          {required && (
-            <Text style={{ color: colors.danger }}> *</Text>
-          )}
+          {required && <Text style={{ color: colors.danger }}> *</Text>}
         </Text>
       )}
 
@@ -133,11 +134,7 @@ export function AppDatePicker({
           },
         ]}
       >
-        <Ionicons
-          name="calendar-outline"
-          size={21}
-          color={colors.textSecondary}
-        />
+        <Ionicons name="calendar-outline" size={21} color={colors.textSecondary} />
 
         <Text
           style={{
@@ -149,53 +146,23 @@ export function AppDatePicker({
           {dateLabel}
         </Text>
 
-        <Ionicons
-          name="chevron-down"
-          size={18}
-          color={colors.textSecondary}
-        />
+        <Ionicons name="chevron-down" size={18} color={colors.textSecondary} />
       </Pressable>
 
-      {!!error && (
-        <Text style={{ color: colors.danger, fontSize: 12 }}>
-          {error}
-        </Text>
-      )}
+      {!!error && <Text style={{ color: colors.danger, fontSize: 12 }}>{error}</Text>}
 
-      <Modal
-        visible={open}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setOpen(false)}
-      >
-        <View
-          style={[
-            styles.overlay,
-            { backgroundColor: colors.overlay },
-          ]}
-        >
-          <Pressable
-            style={StyleSheet.absoluteFill}
-            onPress={() => setOpen(false)}
-          />
+      <Modal visible={open} transparent animationType="fade" onRequestClose={() => setOpen(false)}>
+        <View style={[styles.overlay, { backgroundColor: colors.overlay }]}>
+          <Pressable style={StyleSheet.absoluteFill} onPress={() => setOpen(false)} />
 
-          <View
-            style={[
-              styles.dialog,
-              { backgroundColor: colors.card },
-            ]}
-          >
+          <View style={[styles.dialog, { backgroundColor: colors.card }]}>
             <View style={styles.heading}>
               <Pressable
                 onPress={() => changeMonth(-1)}
                 accessibilityLabel="Mes anterior"
                 hitSlop={10}
               >
-                <Ionicons
-                  name="chevron-back"
-                  size={24}
-                  color={colors.primary}
-                />
+                <Ionicons name="chevron-back" size={24} color={colors.primary} />
               </Pressable>
 
               <Text
@@ -213,11 +180,7 @@ export function AppDatePicker({
                 accessibilityLabel="Mes siguiente"
                 hitSlop={10}
               >
-                <Ionicons
-                  name="chevron-forward"
-                  size={24}
-                  color={colors.primary}
-                />
+                <Ionicons name="chevron-forward" size={24} color={colors.primary} />
               </Pressable>
             </View>
 
@@ -264,18 +227,14 @@ export function AppDatePicker({
                       style={[
                         styles.dayButton,
                         {
-                          backgroundColor: selected
-                            ? colors.primary
-                            : 'transparent',
+                          backgroundColor: selected ? colors.primary : 'transparent',
                           opacity: outOfRange ? 0.3 : 1,
                         },
                       ]}
                     >
                       <Text
                         style={{
-                          color: selected
-                            ? colors.onPrimary
-                            : colors.text,
+                          color: selected ? colors.onPrimary : colors.text,
                           fontWeight: selected ? '700' : '400',
                         }}
                       >
@@ -287,10 +246,7 @@ export function AppDatePicker({
               })}
             </View>
 
-            <Pressable
-              onPress={() => setOpen(false)}
-              style={styles.closeButton}
-            >
+            <Pressable onPress={() => setOpen(false)} style={styles.closeButton}>
               <Text
                 style={{
                   color: colors.primary,

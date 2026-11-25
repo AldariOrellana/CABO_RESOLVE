@@ -1,13 +1,6 @@
-
 import { useState } from 'react';
 
-import {
-    ScrollView,
-    StyleSheet,
-    Text
-} from 'react-native';
-
-
+import { ScrollView, StyleSheet, Text } from 'react-native';
 
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { AppButton } from './Custom/AppButton';
@@ -36,26 +29,15 @@ export function DesignSystemDemo() {
       style={{ flex: 1, backgroundColor: colors.background }}
       contentContainerStyle={styles.container}
     >
-      <Text style={[styles.title, { color: colors.text }]}>
-        Componentes CABO Resolve
-      </Text>
+      <Text style={[styles.title, { color: colors.text }]}>Componentes CABO Resolve</Text>
 
-      <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
-        Apariencia
-      </Text>
+      <Text style={[styles.subtitle, { color: colors.textSecondary }]}>Apariencia</Text>
 
       <AppThemeSelector />
 
-      <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
-        Botones
-      </Text>
+      <Text style={[styles.subtitle, { color: colors.textSecondary }]}>Botones</Text>
 
-      <AppButton
-        title="Principal"
-        variant="primary"
-        icon="save-outline"
-        onPress={probarGuardar}
-      />
+      <AppButton title="Principal" variant="primary" icon="save-outline" onPress={probarGuardar} />
 
       <AppButton
         title="Operación exitosa"
@@ -64,34 +46,15 @@ export function DesignSystemDemo() {
         onPress={probarGuardar}
       />
 
-      <AppButton
-        title="Eliminar"
-        variant="danger"
-        icon="trash-outline"
-        onPress={probarGuardar}
-      />
+      <AppButton title="Eliminar" variant="danger" icon="trash-outline" onPress={probarGuardar} />
 
-      <AppButton
-        title="Advertencia"
-        variant="warning"
-        onPress={probarGuardar}
-      />
+      <AppButton title="Advertencia" variant="warning" onPress={probarGuardar} />
 
-      <AppButton
-        title="Secundario"
-        variant="secondary"
-        onPress={probarGuardar}
-      />
+      <AppButton title="Secundario" variant="secondary" onPress={probarGuardar} />
 
-      <AppButton
-        title="Cancelar"
-        variant="outline"
-        onPress={probarGuardar}
-      />
+      <AppButton title="Cancelar" variant="outline" onPress={probarGuardar} />
 
-      <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
-        Entradas de datos
-      </Text>
+      <Text style={[styles.subtitle, { color: colors.textSecondary }]}>Entradas de datos</Text>
 
       <AppInput
         label="Nombre"
@@ -132,11 +95,7 @@ export function DesignSystemDemo() {
         ]}
       />
 
-      <AppDatePicker
-        label="Fecha límite"
-        value={fecha}
-        onChange={setFecha}
-      />
+      <AppDatePicker label="Fecha límite" value={fecha} onChange={setFecha} />
 
       <AppButton
         title="Probar formulario"

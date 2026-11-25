@@ -1,14 +1,6 @@
-
 import { useState } from 'react';
 
-import {
-    FlatList,
-    Modal,
-    Pressable,
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
+import { FlatList, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { Ionicons } from '@expo/vector-icons';
@@ -43,18 +35,14 @@ export function AppSelect<T extends string>({
   const { colors } = useAppTheme();
   const [open, setOpen] = useState(false);
 
-  const selected = options.find(
-    (option) => option.value === value
-  );
+  const selected = options.find((option) => option.value === value);
 
   return (
     <View style={styles.container}>
       {label && (
         <Text style={[styles.label, { color: colors.text }]}>
           {label}
-          {required && (
-            <Text style={{ color: colors.danger }}> *</Text>
-          )}
+          {required && <Text style={{ color: colors.danger }}> *</Text>}
         </Text>
       )}
 
@@ -84,42 +72,16 @@ export function AppSelect<T extends string>({
           {selected?.label ?? placeholder}
         </Text>
 
-        <Ionicons
-          name="chevron-down-outline"
-          size={20}
-          color={colors.textSecondary}
-        />
+        <Ionicons name="chevron-down-outline" size={20} color={colors.textSecondary} />
       </Pressable>
 
-      {!!error && (
-        <Text style={{ color: colors.danger, fontSize: 12 }}>
-          {error}
-        </Text>
-      )}
+      {!!error && <Text style={{ color: colors.danger, fontSize: 12 }}>{error}</Text>}
 
-      <Modal
-        visible={open}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setOpen(false)}
-      >
-        <View
-          style={[
-            styles.overlay,
-            { backgroundColor: colors.overlay },
-          ]}
-        >
-          <Pressable
-            style={StyleSheet.absoluteFill}
-            onPress={() => setOpen(false)}
-          />
+      <Modal visible={open} transparent animationType="fade" onRequestClose={() => setOpen(false)}>
+        <View style={[styles.overlay, { backgroundColor: colors.overlay }]}>
+          <Pressable style={StyleSheet.absoluteFill} onPress={() => setOpen(false)} />
 
-          <View
-            style={[
-              styles.dialog,
-              { backgroundColor: colors.card },
-            ]}
-          >
+          <View style={[styles.dialog, { backgroundColor: colors.card }]}>
             <View style={styles.heading}>
               <Text
                 style={{
@@ -132,15 +94,8 @@ export function AppSelect<T extends string>({
                 {label ?? 'Seleccionar'}
               </Text>
 
-              <Pressable
-                onPress={() => setOpen(false)}
-                accessibilityLabel="Cerrar selector"
-              >
-                <Ionicons
-                  name="close-outline"
-                  size={25}
-                  color={colors.text}
-                />
+              <Pressable onPress={() => setOpen(false)} accessibilityLabel="Cerrar selector">
+                <Ionicons name="close-outline" size={25} color={colors.text} />
               </Pressable>
             </View>
 
@@ -149,9 +104,7 @@ export function AppSelect<T extends string>({
               keyExtractor={(item) => item.value}
               style={{ maxHeight: 360 }}
               ListEmptyComponent={
-                <Text style={{ color: colors.textSecondary }}>
-                  No hay opciones disponibles.
-                </Text>
+                <Text style={{ color: colors.textSecondary }}>No hay opciones disponibles.</Text>
               }
               renderItem={({ item }) => (
                 <Pressable
@@ -179,11 +132,7 @@ export function AppSelect<T extends string>({
                   </Text>
 
                   {item.value === value && (
-                    <Ionicons
-                      name="checkmark-circle"
-                      size={22}
-                      color={colors.primary}
-                    />
+                    <Ionicons name="checkmark-circle" size={22} color={colors.primary} />
                   )}
                 </Pressable>
               )}

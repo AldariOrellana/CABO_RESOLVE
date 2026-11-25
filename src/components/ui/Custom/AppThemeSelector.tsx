@@ -1,10 +1,4 @@
-
-import {
-    Pressable,
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -27,11 +21,11 @@ const options = [
     label: 'Oscuro',
     icon: 'moon-outline',
   },
-] as const satisfies ReadonlyArray<{
+] as const satisfies readonly {
   value: ThemeMode;
   label: string;
   icon: React.ComponentProps<typeof Ionicons>['name'];
-}>;
+}[];
 
 export function AppThemeSelector() {
   const { mode, setMode, colors } = useAppTheme();
@@ -50,28 +44,20 @@ export function AppThemeSelector() {
             style={[
               styles.option,
               {
-                backgroundColor: active
-                  ? colors.primary
-                  : colors.input,
-                borderColor: active
-                  ? colors.primary
-                  : colors.border,
+                backgroundColor: active ? colors.primary : colors.input,
+                borderColor: active ? colors.primary : colors.border,
               },
             ]}
           >
             <Ionicons
               name={option.icon}
               size={19}
-              color={
-                active ? colors.onPrimary : colors.textSecondary
-              }
+              color={active ? colors.onPrimary : colors.textSecondary}
             />
 
             <Text
               style={{
-                color: active
-                  ? colors.onPrimary
-                  : colors.text,
+                color: active ? colors.onPrimary : colors.text,
                 fontWeight: active ? '700' : '500',
                 fontSize: 13,
               }}

@@ -1,14 +1,6 @@
+import { useState, type ComponentPropsWithRef } from 'react';
 
-import { useState } from 'react';
-
-import {
-    Pressable,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
-    type TextInputProps,
-} from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
 
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { Ionicons } from '@expo/vector-icons';
@@ -16,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 type IconName = React.ComponentProps<typeof Ionicons>['name'];
 
 interface AppInputProps extends TextInputProps {
+  inputRef?: ComponentPropsWithRef<typeof TextInput>['ref'];
   label?: string;
   error?: string;
   hint?: string;
@@ -25,6 +18,7 @@ interface AppInputProps extends TextInputProps {
 }
 
 export function AppInput({
+  inputRef,
   label,
   error,
   hint,
@@ -43,16 +37,9 @@ export function AppInput({
   return (
     <View style={styles.container}>
       {label && (
-        <Text
-          style={[
-            styles.label,
-            { color: colors.text },
-          ]}
-        >
+        <Text style={[styles.label, { color: colors.text }]}>
           {label}
-          {required && (
-            <Text style={{ color: colors.danger }}> *</Text>
-          )}
+          {required && <Text style={{ color: colors.danger }}> *</Text>}
         </Text>
       )}
 
@@ -61,34 +48,19 @@ export function AppInput({
           styles.field,
           {
             backgroundColor: colors.input,
-            borderColor: error
-              ? colors.danger
-              : focused
-                ? colors.primary
-                : colors.border,
+            borderColor: error ? colors.danger : focused ? colors.primary : colors.border,
             opacity: editable ? 1 : 0.55,
           },
         ]}
       >
-        {leftIcon && (
-          <Ionicons
-            name={leftIcon}
-            size={20}
-            color={colors.textSecondary}
-          />
-        )}
+        {leftIcon && <Ionicons name={leftIcon} size={20} color={colors.textSecondary} />}
 
         <TextInput
+          ref={inputRef}
           {...props}
           editable={editable}
-          secureTextEntry={
-            isPassword ? !visible : secureTextEntry
-          }
-          style={[
-            styles.input,
-            { color: colors.text },
-            style,
-          ]}
+          secureTextEntry={isPassword ? !visible : secureTextEntry}
+          style={[styles.input, { color: colors.text }, style]}
           placeholderTextColor={colors.placeholder}
           selectionColor={colors.primary}
           onFocus={(event) => {
@@ -106,9 +78,7 @@ export function AppInput({
           <Pressable
             onPress={() => setVisible((current) => !current)}
             accessibilityRole="button"
-            accessibilityLabel={
-              visible ? 'Ocultar contraseña' : 'Mostrar contraseña'
-            }
+            accessibilityLabel={visible ? 'Ocultar contraseña' : 'Mostrar contraseña'}
           >
             <Ionicons
               name={visible ? 'eye-outline' : 'eye-off-outline'}
@@ -119,21 +89,10 @@ export function AppInput({
         )}
       </View>
 
-      {!!error && (
-        <Text style={[styles.message, { color: colors.danger }]}>
-          {error}
-        </Text>
-      )}
+      {!!error && <Text style={[styles.message, { color: colors.danger }]}>{error}</Text>}
 
       {!error && !!hint && (
-        <Text
-          style={[
-            styles.message,
-            { color: colors.textSecondary },
-          ]}
-        >
-          {hint}
-        </Text>
+        <Text style={[styles.message, { color: colors.textSecondary }]}>{hint}</Text>
       )}
     </View>
   );

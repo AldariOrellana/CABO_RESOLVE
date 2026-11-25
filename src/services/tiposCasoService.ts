@@ -1,4 +1,3 @@
-
 import { supabase } from '@/lib/supabase';
 
 export interface TipoCaso {
@@ -25,24 +24,15 @@ export async function obtenerTiposCaso() {
   return data as TipoCaso[];
 }
 
-export async function crearTipoCaso(
-  tipo: TipoCasoInput
-) {
-  const { data, error } = await supabase
-    .from('tipos_caso')
-    .insert(tipo)
-    .select()
-    .single();
+export async function crearTipoCaso(tipo: TipoCasoInput) {
+  const { data, error } = await supabase.from('tipos_caso').insert(tipo).select().single();
 
   if (error) throw error;
 
   return data as TipoCaso;
 }
 
-export async function actualizarTipoCaso(
-  id: number,
-  tipo: TipoCasoInput
-) {
+export async function actualizarTipoCaso(id: number, tipo: TipoCasoInput) {
   const { data, error } = await supabase
     .from('tipos_caso')
     .update(tipo)
@@ -55,10 +45,7 @@ export async function actualizarTipoCaso(
   return data as TipoCaso;
 }
 
-export async function cambiarEstadoTipoCaso(
-  id: number,
-  activo: boolean
-) {
+export async function cambiarEstadoTipoCaso(id: number, activo: boolean) {
   const { data, error } = await supabase
     .from('tipos_caso')
     .update({ activo })
